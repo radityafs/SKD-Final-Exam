@@ -68,5 +68,5 @@
         </div>
     </div>
 
-    @include('partials.footer')
+    @include('partials.script')
 </body>

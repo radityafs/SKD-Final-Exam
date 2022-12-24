@@ -34,7 +34,8 @@
                 </div>
             @endif
 
-            <form action="{{ url('/register') }}">
+            <form action="{{ url('/register') }}" method="POST">
+                @csrf
                 <div class="auth-credentials m-b-xxl">
                     <label for="signUpUsername" class="form-label">Full Name</label>
                     <input type="text" name="name" class="form-control m-b-md" id="signUpUsername"
@@ -72,5 +73,5 @@
         </div>
     </div>
 
-    @include('partials.footer')
+    @include('partials.script')
 </body>

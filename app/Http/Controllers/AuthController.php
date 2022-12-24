@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthenticationController extends Controller
+class AuthController extends Controller
 {
     public function register(Request $request)
     {
@@ -22,7 +22,7 @@ class AuthenticationController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => 'user',
-            'is_active' => 0,
+            'isActive' => 0,
             'remember_token' => $request->_token,
         ]);
 
@@ -40,19 +40,19 @@ class AuthenticationController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role === 'admin') {
+            if (Auth::user()->role === 'admin' || Auth::user()->role === 'super_admin') {
                 return redirect("/admin/dashboard");
             } else {
                 if (Auth::user()->isActive == 1) {
                     return redirect("/");
                 } else {
                     // Auth::logout();
-                    return redirect("/verify")->back()->withErrors(['error' => "Akun anda belum diaktifkan, silahkan aktivasi akun anda terlebih dahulu"]);
+                    return redirect("/verify")->withErrors(['error' => "Akun anda belum diaktifkan, silahkan aktivasi akun anda terlebih dahulu"]);
                 }
             }
         }
 
-        return back()->with('error', 'Password atau email salah');
+        return redirect("/login")->with('error', 'Email atau password salah');
     }
 
     public function logout()

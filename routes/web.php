@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\RecipeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,20 +17,28 @@ use App\Http\Controllers\ProviderController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", [RecipeController::class, "landingPage"]);
+
+//group guest
+Route::group(["middleware" => "guest"], function () {
+    Route::view("/login", "pages.auth.login");
+    Route::post("/login", [AuthController::class, "login"])->name("login");
+
+    Route::view("/register", "pages.auth.register");
+    Route::post("/register", [AuthController::class, "register"])->name("register");
+
+    Route::get("auth/{provider}", [ProviderController::class, "loginProvider"]);
+    Route::get("auth/callback/{provider}", [ProviderController::class, "callbackProvider"]);
 });
 
+Route::get("/dashboard", [AdminController::class, "dashboard"])->middleware("auth");
 
 
-Route::view("/login", "pages.login");
-Route::post("/login", [AuthenticationController::class, "login"]);
+Route::get("/logout", [AuthController::class, "logout"]);
 
-Route::view("/register", "pages.register");
-Route::post("/register", [AuthenticationController::class, "register"]);
-Route::get("/logout", [AuthenticationController::class, "logout"]);
+Route::group(["middleware" => "auth"], function () {
+    Route::get("/add-recipe", [RecipeController::class,"addRecipePage"]);
+    Route::post("/add-recipe", [RecipeController::class,"addRecipe"]);    
+});
 
-
-Route::get("/admin/dashboard", [AdminController::class, "dashboard"]);
-Route::get("auth/{provider}", [ProviderController::class, "loginProvider"]);
-Route::get("auth/callback/{provider}", [ProviderController::class, "callbackProvider"]);
+Route::get("/list-recipe", [RecipeController::class,"listRecipePage"]);
