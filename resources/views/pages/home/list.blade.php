@@ -38,9 +38,8 @@
             @if (count($recipe) > 0)
                 @foreach ($recipe as $item)
                     @if ($item->isActive == 1)
-                        
                       <div class="col-md-3">
-                            <a class="card" href="{{ url('recipe/detail/' . $item->id) }}">
+                            <a class="card" href="{{ url("recipe/{$item->id}") }}">
                                 <img class="image-card" src="{{ url("/uploads/{$item->photo}") }}" alt="Food Image" />
                                 <p class="carousel-caption">{{ $item->title }}</p>
                             </a>

@@ -58,7 +58,7 @@
                     <label class="form-label me-2" title="Required">
                         Ingredients
                     </label>
-                    <textarea class="form-control" name="ingredients" rows="10" placeholder="Ingredients" required><?= isset($recipe['ingredients']) ? $recipe['ingredients'] : '' ?></textarea>
+                    <textarea class="form-control" style="white-space: pre-wrap" name="ingredients" rows="10" placeholder="Ingredients" required><?= isset($recipe['ingredients']) ? $recipe['ingredients'] : '' ?></textarea>
                 </div>
 
 

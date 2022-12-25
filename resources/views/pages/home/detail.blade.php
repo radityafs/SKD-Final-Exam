@@ -14,22 +14,34 @@
 </head>
 
 <body>
+    @include('partials.navbar')
+
     <section style="padding-top: 70px;">
-        <div class="container">
-            <h1 class="title mb-2"></h1>
-            <h5 class="title" style="font-size:28px;"></h5>
-            <div class="content-img">
-                <img src="" alt="Food Image" />
+        <div class="container-md w-full justify-content-center">
+            <h1 class="title mb-2 text-center">{{ $recipe['title'] }}</h1>
+            <div class="content-img" style="margin-top:20px">
+                <img src="{{ url("uploads/$recipe->photo") }}" style="width:500px; height:350px; border-radius:25px; display: block; margin-left:auto; margin-right:auto;" alt="Food Image" />
             </div>
         </div>
     </section>
 
-    <section>
+    <section style="margin-top:100px; margin-bottom: 150px;">
         <div class="container">
             <div class="ingridients">
                 <h2>Ingriedients</h2>
-                <ul></ul>
+
+                @php
+                $ingridients = preg_split('/\r\n|\r|\n/', $recipe['ingridients']);
+                @endphp
+
+                <ul>
+                    @foreach ($ingridients as $ingridient)
+                    <li>{{ $ingridient }}</li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </section>
+
+    @include('partials.footer')
 </body>

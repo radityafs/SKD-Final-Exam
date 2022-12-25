@@ -41,15 +41,19 @@
             </div>
             <div class="row">
                 <div class="left col-12 col-md-6">
-                    <img src="" alt="Suggestion" />
-                    <div></div>
+                    <img src="{{ url("uploads/{$top_recipe[0]['photo']}") }}" alt="Suggestion" />
+                    <div>
+
+                    </div>
                 </div>
                 <div class="right col-12 col-md-6">
                     <div>
-                        <h1></h1>
+                        <h1>
+                            {{ $top_recipe[0]['title'] }}
+                        </h1>
                         <hr />
                         <p>
-
+                            {{ substr($top_recipe[0]['ingridients'], 0, 100) . '...' }}
                         </p>
                         <a href="" class="btn back-primary text-light" style="width: 150px;">
                             Learn More
@@ -67,15 +71,17 @@
             </div>
             <div class="row">
                 <div class="left col-12 col-md-6">
-                    <img src="" alt="New Recipe" />
+                    <img src="{{ url("uploads/{$recipe[0]['photo']}") }}" alt="New Recipe" />
                     <div></div>
                 </div>
                 <div class="right col-12 col-md-6">
                     <div>
-                        <h1></h1>
+                        <h1>
+                            {{ $recipe[0]['title'] }}
+                        </h1>
                         <hr />
                         <p>
-
+                            {{ substr($recipe[0]['ingridients'], 0, 100) . '...' }}
                         </p>
                         <a href="" class="btn back-primary text-light" style="width: 150px;">
                             Learn More
@@ -92,7 +98,18 @@
             </div>
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-
+                    @foreach ($recipe as $item)
+                    <div class="col">
+                        <a href="{{ url("recipe/{$item['id']}") }}">
+                            <div class="card align-items-center">
+                                <p class="title text-dark text-str back-primary px-2 py-1 rounded">
+                                    {{ $item['title'] }}
+                                </p>
+                                <img src="{{ url("/uploads/{$item->photo}") }}" class="card-img-top" alt=anu />
+                            </div>
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

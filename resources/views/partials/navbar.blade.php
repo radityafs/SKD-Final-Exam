@@ -1,7 +1,7 @@
 <nav class='navbar nav-wrapper navbar-expand-lg navbar-light bg-light bg-white py-40 w-100'>
     <div class='container-md'>
-        <a class='navbar-brand' href='./'>
-            <img src="./assets/images/logo.png" style="width: 40px; height:40px;" alt='dssds' />
+        <a class='navbar-brand' href='{{ url("") }}'>
+            <img src="{{ url("assets/images/logo.png") }}" style="width: 40px; height:40px;" alt='dssds' />
         </a>
         <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav'
             aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
@@ -9,8 +9,6 @@
         </button>
         <div class='collapse navbar-collapse' id='navbarNav'>
             <ul class='navbar-nav ms-auto text-lg gap-lg-0 gap-2'>
-
-
                 <li class='nav-item my-auto me-lg-20'>
                     <a class='nav-link' href='{{ url('list-recipe') }}'>
                         Find Recipe
@@ -51,14 +49,14 @@
                         <li>
                           <a
                             class="dropdown-item text-lg color-palette-2"
-                            href="Profile.php"
+                            href="{{ url("/my-profile") }}"
                           >
                             My Profile
                           </a>
 
                           <a
                           class="dropdown-item text-lg color-palette-2"
-                          href="LogOut.php"
+                          href="{{ url("/logout") }}"
                         >
                           Log out
                         </a>
@@ -72,7 +70,6 @@
                     <a style="text-decoration: none;" class="btn-nav" href="{{ 'register' }}">
                         Sign Up
                     </a>
-                    
                 </li>
                 @endif
             </ul>

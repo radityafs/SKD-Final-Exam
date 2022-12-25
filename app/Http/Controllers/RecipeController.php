@@ -11,7 +11,12 @@ class RecipeController extends Controller
 {
     public function landingPage()
     {
-        return view('pages.home.index');
+
+        $top_recipe = Recipe::where('isActive', 1)->inRandomOrder()->limit(1)->get();
+
+        $recipe = Recipe::where('isActive', 1)->orderBy('id', 'desc')->limit(3)->get();
+        
+        return view('pages.home.index', compact('recipe', 'top_recipe'));
     }
 
     public function addRecipePage()
@@ -26,12 +31,19 @@ class RecipeController extends Controller
         return view("pages.home.list", compact('recipe'));
     }
 
+    public function detailRecipePage($id)
+    {
+        $recipe = Recipe::findOrFail($id);
+
+        return view("pages.home.detail", compact('recipe'));
+    }
+
     public function addRecipe()
     {   
         $data = request()->validate([
             'title' => 'required',
             'ingredients' => 'required',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'kategori' => 'required',
         ]);
 

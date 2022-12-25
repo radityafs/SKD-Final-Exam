@@ -48,7 +48,8 @@
                                             </div>
                                             <div class="widget-stats-content flex-fill">
                                                 <span class="widget-stats-title">Total User</span>
-                                                <span class="widget-stats-amount">$38,211</span>
+                                                <span class="widget-stats-amount"><?= $user[0] ?? 0 + $user[1] ?? 0 ?></span>
+                                                <span class="widget-stats-info"><?= $user[1] ?? 0 ?> Aktif , <?= $user[0] ?? 0 ?> Belum Aktif </span>
                                             </div>
                                         </div>
                                     </div>
@@ -59,11 +60,12 @@
                                     <div class="card-body">
                                         <div class="widget-stats-container d-flex">
                                             <div class="widget-stats-icon widget-stats-icon-warning">
-                                                <i class="material-icons-outlined">person</i>
+                                                <i class="material-icons-outlined">cloud</i>
                                             </div>
                                             <div class="widget-stats-content flex-fill">
-                                                <span class="widget-stats-title">Active User</span>
-                                                <span class="widget-stats-amount">23,491</span>
+                                                <span class="widget-stats-title">Total Category</span>
+                                                <span class="widget-stats-amount"><?= $category ?></span>
+                                                <span class="widget-stats-info"><?= $category ?> Kategori</span>
                                             </div>
                                         </div>
                                     </div>
@@ -74,11 +76,12 @@
                                     <div class="card-body">
                                         <div class="widget-stats-container d-flex">
                                             <div class="widget-stats-icon widget-stats-icon-danger">
-                                                <i class="material-icons-outlined">person</i>
+                                                <i class="material-icons-outlined">cloud</i>
                                             </div>
                                             <div class="widget-stats-content flex-fill">
-                                                <span class="widget-stats-title">Recipe</span>
-                                                <span class="widget-stats-amount">1</span>
+                                                <span class="widget-stats-title">Total Recipe</span>
+                                                <span class="widget-stats-amount"><?= $recipe[0] ?? 0 + $recipe[1] ?? 0 ?></span>
+                                                <span class="widget-stats-info"><?= $recipe[1] ?? 0 ?> Aktif , <?= $recipe[0] ?? 0 ?> Belum Aktif</span>
                                             </div>
                                         </div>
                                     </div>
@@ -87,25 +90,61 @@
                         </div>
                     </div>
 
+                    @if(Auth::user()->role == 'super_admin')
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                @include('partials.table', [
-                                    'columns' => ['ID', 'Name', 'Email', 'Role', 'Created At', 'Updated At'],
-                                    'rows' => [
-                                        [
-                                            '1',
-                                            'John Doe',
-                                            'radityafiqa4@gmail.com',
-                                            'Admin',
-                                            '2020-10-10',
-                                            '2020-10-10',
-                                        ],
-                                    ],
-                                ])
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Aktivasi User</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="datatable1" class="display" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (count($user_non_active) > 0)
+                                                    @foreach ($user_non_active as $user)
+                                                        <tr>
+                                                            <td>{{ $user['id'] }}</td>
+                                                            <td>{{ $user['name'] }}</td>
+                                                            <td>{{ $user['email'] }}</td>
+                                                            <td>
+                                                                <a href="{{ url("/users/{$user['id']}/status ") }}"
+                                                                    class="btn btn-primary btn-sm">Aktifkan</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">Tidak ada data</td>
+                                                    </tr>
+                                                @endif
+                                                
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
